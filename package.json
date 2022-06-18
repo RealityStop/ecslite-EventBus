@@ -1,0 +1,21 @@
+{
+  "name": "com.leoecscommunity.ecslite.eventbus",
+  "author": "RealityStop",
+  "displayName": "LeoECSCommunity Lite Event Bus",
+  "description": "Event Bus for LeoECSCommunity Lite.",
+  "unity": "2020.3",
+  "version": "1.0.0",
+  "keywords": [
+    "leoecslite",
+    "leoecs",
+    "ecs",
+    "events",
+    "event bus",
+    "performance"
+  ],
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RealityStop/ecslite-EventBus"
+  }
+}
