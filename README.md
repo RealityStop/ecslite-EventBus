@@ -1,7 +1,5 @@
 # EcsLite EventBus
 
-> ⚠️ This repository is being actively worked on and tested.  This notice will be removed when ready for general use.
-
 💡 EventBus is an extension for [LeoECSCommunity/ecslite](https://github.com/LeoECSCommunity/ecslite) that simplifies exporting state data from the ECS core into the observing views that handle presenting state to the user.  EventBus makes writing performant, well-structured code easier.
 
 ⚠️ This extension is NOT intended for communication between ECS systems.  That should be done with the built-in ecs-lite mechanisms such as flag components and filters.  Rather, this extension is focused on exporting state to outside observers.
