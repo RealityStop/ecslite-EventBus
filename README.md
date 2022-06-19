@@ -128,7 +128,8 @@ public struct HealthChangedEvent : IEventEntity
 	//interfaces don't allow fields, we have to use a property here.  
 	public EcsPackedEntityWithWorld Source { get; set; }  
 	  
-	//But regular data can be fields. public float newHealth;  
+	//But regular data can be fields.
+	public float newHealth;  
 	public float newHealthPercent;
 }
 ```
