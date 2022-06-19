@@ -151,8 +151,7 @@ public class UpdateDamagedUnits : IEcsRunSystem
 			ref var healthComponent = ref _healthPool.Get(healthEntity);
 
 			//Asking the EventBus to add an event is just like adding to a pool, with the exception that Entity Events take the packed entity.
-			ref var changedEvent = ref _eventBus.Value.EntityEvents.Add<HealthChangedEvent>(  
-			_world.PackEntityWithWorld(positionEntity));  
+			ref var changedEvent = ref _eventBus.Value.EntityEvents.Add<HealthChangedEvent>(_world.PackEntityWithWorld(positionEntity));  
 			
 			//Because the eventBus uses delayed notification,
 			//we can take our time and set up the event, which
