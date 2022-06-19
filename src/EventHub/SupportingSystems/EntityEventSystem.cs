@@ -37,7 +37,7 @@ namespace Leopotam.EcsLite
 					ref var eventComponent = ref _pool.Get(eventEntityID);
 					subData.Invoke(eventComponent.Source, eventComponent);
 
-					if (!_eventIsPersistent)
+					//if (!_eventIsPersistent)		//Unlike the other event types, Entity Events always have to remove, because there is no way to access them later to manually remove!
 						_pool.Del(eventEntityID);
 				}
 		}
