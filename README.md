@@ -62,7 +62,19 @@ To give our example some context, we need to cover the four event types which wi
 
 > Note: due to the optimizations required to store multiple entity events in a performant manner, it is not possible to manually check for or fetch Entity Events.  The Event Bus will notify listeners at the correct time, but it does not off the ability to query for the presence of them.
 
+### Event Lifespan
+By default, events are cleaned after they are executed.  However, if your event implements `IEventPersist`, the event will not be cleaned, and will instead trigger again the next time a processor for this event runs.  Keep in mind that the EventBus does not distinguish between persisting events and new events.  It will continue to raise the event until it is removed.
 
+> Because Entity Events are not uniquely addressable, IEventPersist is ignored for them.
+
+
+### Event Capability Matrix
+| Event Type  | Multiple | Add() | Has() | Del() | IEventPersist |
+|--|--|--|--|--|--|
+| Unique | ❌ (max 1 per type) | ✔ | ✔ | ✔ | ✔ |
+| Global | ✔ | ✔ | ✔ | ✔ | ✔ |
+| Entity | ✔ | ✔ | ❌ | ❌ | ❌ |
+| Flag | ❌ (1 per type per entity) | ✔ | ✔ | ✔ | ✔ |
 
 
 # A compelling example
@@ -234,20 +246,6 @@ This is the 'naive' approach that many would opt for and a solution isn't immedi
 > The EventBus also supports doing the same thing with flag components, meaning your systems don't even have to know about events! Performance is roughly the same.
 
 **Result** -> 70,854 entities created above 60fps
-
-# Event Lifespan
-By default, events are cleaned after they are executed.  However, if your event implements `IEventPersist`, the event will not be cleaned, and will instead trigger again the next time a processor for this event runs.  Keep in mind that the EventBus does not distinguish between persisting events and new events.  It will continue to raise the event until it is removed.
-
-> Because Entity Events are not uniquely addressable, IEventPersist is ignored for them.
-
-
-# Event Capability Matrix
-| Event Type  | Multiple | Add() | Has() | Del() | IEventPersist |
-|--|--|--|--|--|--|
-| Unique | ❌ (max 1 per type) | ✔ | ✔ | ✔ | ✔ |
-| Global | ✔ | ✔ | ✔ | ✔ | ✔ |
-| Entity | ✔ | ✔ | ❌ | ❌ | ❌ |
-| Flag | ❌ (1 per type per entity) | ✔ | ✔ | ✔ | ✔ |
 
 
 
