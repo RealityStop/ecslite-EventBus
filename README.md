@@ -183,7 +183,7 @@ Let's take a look at what this might look like for a simple single-purpose Liste
  
   private void OnHealthChanged(EcsPackedEntityWithWorld packed, ref HealthChangedEvent item)  
   {  
-    // update the scrollbar, and we already have the event passed, so there is no need for pools.
+    // update the healthbar.  The event instance data is passed as a parameter, and can be directly used.
   }
 
   //Terminating:
