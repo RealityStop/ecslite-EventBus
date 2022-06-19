@@ -244,10 +244,10 @@ By default, events are cleaned after they are executed.  However, if your event 
 # Event Capability Matrix
 | Event Type  | Multiple | Add() | Has() | Del() | IEventPersist |
 |--|--|--|--|--|--|
-| Unique | ✖ (max 1 per type) | ✔ | ✔ | ✔ | ✔ |
+| Unique | ❌ (max 1 per type) | ✔ | ✔ | ✔ | ✔ |
 | Global | ✔ | ✔ | ✔ | ✔ | ✔ |
-| Entity | ✔ | ✔ | ✖ | ✖ | ✖ |
-| Flag | ✖ (1 per type per entity) | ✔ | ✔ | ✔ | ✔ |
+| Entity | ✔ | ✔ | ❌ | ❌ | ❌ |
+| Flag | ❌ (1 per type per entity) | ✔ | ✔ | ✔ | ✔ |
 
 
 
