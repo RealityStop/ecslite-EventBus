@@ -1,3 +1,4 @@
+
 # EcsLite EventBus
 
 💡 EventBus is an extension for [LeoECSCommunity/ecslite](https://github.com/LeoECSCommunity/ecslite) that simplifies exporting state data from the ECS core into the observing views that handle presenting state to the user.  EventBus makes writing performant, well-structured code easier.
@@ -191,7 +192,7 @@ Let's take a look at what this might look like for a simple single-purpose Liste
   _eventBus.EntityEvents.RemoveListener<HealthChangedEvent>(PackedEntity, OnHealthChanged);  
 ```
 
-## Performance
+# Performance
 All of this is meaningless if the performance of the Event Bus is too low to use.  So I tested the performance on my aging 2015 Skylake processor in Unity.  All of the following consist of the same game systems, the tests only really manipulate the view (Unity gameobject) side to adjust how those views are accessing the ECS data.  The only logic changing on the ECS side is adjusting how we're raising the events to match the changes on the View side (so if we swap the view GameObjects from Entity Events to Flag Events, we swap how we raise them as well in the ECS systems).  The important part is that all of the logic for moving the entities and damaging them is always happening, event when there's nothing listening.
 
 Each test spawns entities around the play area (screen) that are moving with constant velocity and bouncing off the edge of the screen. Anytime they hit an edge, their health is reduced (though they never die, to eliminate variance).  GameObject views are wired to observe the entities and reflect the ECS state.
@@ -234,10 +235,24 @@ This is the 'naive' approach that many would opt for and a solution isn't immedi
 
 **Result** -> 70,854 entities created above 60fps
 
+# Event Lifespan
+By default, events are cleaned after they are executed.  However, if your event implements `IEventPersist`, the event will not be cleaned, and will instead trigger again the next time a processor for this event runs.  Keep in mind that the EventBus does not distinguish between persisting events and new events.  It will continue to raise the event until it is removed.
+
+> Because Entity Events are not uniquely addressable, IEventPersist is ignored for them.
+
+
+# Event Capability Matrix
+| Event Type  | Multiple | Add() | Has() | Del() | IEventPersist |
+|--|--|--|--|--|--|
+| Unique | ✖ (max 1 per type) | ✔ | ✔ | ✔ | ✔ |
+| Global | ✔ | ✔ | ✔ | ✔ | ✔ |
+| Entity | ✔ | ✔ | ✖ | ✖ | ✖ |
+| Flag | ✖ (1 per type per entity) | ✔ | ✔ | ✔ | ✔ |
+
 
 
 ## License
-All code in this repository is covered by the [Mozilla Public License](https://www.mozilla.org/en-US/MPL/), which states that you are free to use the code for any purpose, commercial or otherwise, for any type of application or purpose, and that you are free to release your works under whatever license you choose.  However, regardless of application or method, this code remains under the MPL license, and all modifications or portions of it must also remain under the MPL license and be made available, but this is limited to the covered code and modifications to it.  It is NOT viral, nor does it enforce the MPL license on any other portion of your code, as in strong copyleft licenses like GPL and its derivatives.   The intent is that this code is MPL, shall always be MPL regardless of author, and that it and all modified versions should be public and available to all.
+All code in this repository is covered by the [Mozilla Public License](https://www.mozilla.org/en-US/MPL/), which states that you are free to use the code for any purpose, commercial or otherwise, for any type of application or purpose, and that you are free to release your works under whatever license you choose.  However, regardless of application or method, this code remains under the MPL license, and all modifications or portions of it must also remain under the MPL license and be made available, but this is limited to the covered code and modifications to it.  It is NOT viral, nor does it enforce the MPL license on any other portion of your code, as in strong copyleft licenses like GPL and its derivatives.   The intent is that this code is MPL, shall always be MPL regardless of author, and that it and all modified versions should be public and available to all, but no burden should be placed on your other code or work.
 
 Simple guidelines:
 | Use| Modify |
